@@ -16,6 +16,7 @@
 
 SRCS		:=	philo.c\
 				philo_utils.c\
+				threads.c\
 
 SRCS_D		:=	src/
 

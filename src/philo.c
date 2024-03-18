@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:24 by grebrune          #+#    #+#             */
-/*   Updated: 2024/03/13 18:17:24 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:14:03 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,54 @@ size_t	ft_atoi(const char *nptr)
 	return (res * signe);
 }
 
-t_philo	check_args(char **av)
+t_arg	check_args(char **av)
 {
-	t_philo	philo;
+	t_arg	arg;
 
-	philo.nbr = ft_atoi(av[1]);
-	if (philo.nbr == 1)
+	arg.nbr = ft_atoi(av[1]);
+	if (arg.nbr == 1)
 		exit (0);
-	philo.tim_die = ft_atoi(av[2]);
-	if (philo.tim_die == 1)
+	arg.tim_die = ft_atoi(av[2]);
+	if (arg.tim_die == 1)
 		exit (0);
-	philo.tim_eat = ft_atoi(av[3]);
-	if (philo.tim_eat == 1)
+	arg.tim_eat = ft_atoi(av[3]);
+	if (arg.tim_eat == 1)
 		exit (0);
-	philo.tim_sle = ft_atoi(av[4]);
-	if (philo.tim_sle == 1)
+	arg.tim_sle = ft_atoi(av[4]);
+	if (arg.tim_sle == 1)
 		exit (0);
-	return (philo);
+	return (arg);
 }
-//number_of_philosophers time_to_die time_to_eat time_to_sleep
+
+void	check_philo_alive(t_arg arg, t_philo **tab)
+{
+	size_t	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		if (tab[i]->tim_die > arg.tim_die)
+			ft_exit("A philosopher is dead.\n");
+		i++;
+	}
+}
+
+
 int	main(int ac, char **av)
 {
-	t_philo	philo;
+	t_arg	*arg;
+	t_philo	**philo;
 
 	if (ac < 5 || ac > 6)
 		return (write(1, "Error : Wrong number of arguments.\n", 35), 1);
-	philo = check_args(&av[1])
-		(write(1, "Error : Wrong value of arguments.\n", 35), 1);
+	*arg = check_args(&av[1]);
+	if (arg == NULL)
+		return (write(1, "Error : Wrong of arguments.\n", 35), 1);
+	philo = malloc(sizeof (t_philo) * arg->nbr);
+	if (init_threads(arg))
+		return (write(1, "Shit appends.\n", 35), 1);
 }
+//check parsing
+//thread all philo
+//create the forks & give the fork
+//protect with mutex the forks
