@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/03/18 17:47:44 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/03/19 14:05:38 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,14 @@
 
 typedef struct s_arg
 {
-	size_t	nbr;
-	size_t	tim_die;
-	size_t	tim_eat;
-	size_t	tim_sle;
-	int		stop;
+	size_t			nbr;
+	size_t			tim_die;
+	size_t			tim_eat;
+	size_t			tim_sle;
+	int				stop;
+	pthread_mutex_t	m_write;
+	pthread_mutex_t	m_dead;
+	pthread_mutex_t	m_eat;
 }	t_arg;
 
 typedef struct s_philo
