@@ -6,7 +6,7 @@
 #    By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 16:52:20 by grebrune          #+#    #+#              #
-#    Updated: 2024/03/13 16:55:49 by grebrune         ###   ########.fr        #
+#    Updated: 2024/04/08 15:34:55 by grebrune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,11 @@
 #                                                       VARIABLE                                                       #
 ########################################################################################################################
 
-SRCS		:=	philo.c\
-				philo_utils.c\
-				threads.c\
+SRCS		:=	activ.c\
+				init.c\
+				main.c\
+				monitor.c\
+				time_clear.c\
 
 SRCS_D		:=	src/
 
@@ -28,7 +30,7 @@ HEAD		:=	philo.h
 
 HEAD_D		:=	.
 
-CFLAGS		:=	-Wall -Wextra -Werror# -g3 -fsanitize=address
+CFLAGS		:=	-Wall -Wextra -Werror -pthread -g3 #-fsanitize=address
 
 BIN			:=	philo
 

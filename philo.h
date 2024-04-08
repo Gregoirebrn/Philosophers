@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/03/19 14:05:38 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/03/28 18:27:20 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,40 +18,65 @@
 #include <sys/time.h>
 #include <pthread.h>
 #include <stdio.h>
+#include <limits.h>
+#include <stdbool.h>
+
 // compilation -lpthread
-//number_of_philosophers time_to_die time_to_eat time_to_sleep
 
-typedef struct s_arg
+typedef struct s_fork
 {
-	size_t			nbr;
-	size_t			tim_die;
-	size_t			tim_eat;
-	size_t			tim_sle;
-	int				stop;
+	pthread_mutex_t	fork;
+	int				fork_id;
+}	t_fork;
+
+typedef struct s_philo t_philo;
+
+typedef struct s_table
+{
+	bool			stop;
+	long			nbr;
+	long			tim_die;
+	long			tim_eat;
+	long			tim_sleep;
+	long			tim_start;
+	pthread_t		monitor;
+	pthread_mutex_t	m_start;
+	pthread_mutex_t	m_table;
 	pthread_mutex_t	m_write;
-	pthread_mutex_t	m_dead;
-	pthread_mutex_t	m_eat;
-}	t_arg;
+	t_fork			*forks;
+	t_philo			*philos;
+}	t_table;
 
-typedef struct s_philo
+struct s_philo
 {
-	size_t			name;
-	size_t			tim_die;
-	size_t			tim_eat;
-	size_t			tim_sle;
-	pthread_t		*thread;
-	int				stop;
-	pthread_mutex_t	mutex;
-	int				fork;
-}	t_philo;
+	long			id;
+	long			last_meal;
+	bool			full;
+	pthread_t		thread;
+	pthread_mutex_t	*m_fork_first;
+	pthread_mutex_t	*m_fork_second;
+	t_table			*table;
+};
 
-long int	get_time(void);
+long		get_time(void);
 void		ft_usleep(long int time);
 void		ft_exit(const char *str);
 
-void		check_philo_alive(t_arg arg, t_philo **tab);
-void		check_philo_hungry(t_arg arg, t_philo **tab);
-t_philo		*make_tab(size_t i, t_arg file);
-int			init_threads(t_arg *args);
+int			check_philo_alive(t_philo *philo);
+int			check_philo_hungry(t_philo *philo);
+void		check_write(char *str, t_philo *philo);
+
+void	*monitoring(void *data);
+
+void		init_threads(t_table *table);
+void		init_philos(t_table *table);
+void		init_forks(t_philo *philo, t_fork *fork, int i);
+
+int			dinner_begin(t_table *table);
+void		*thread_activ(void *data);
+
+void	philo_is_thinking(t_philo *philo);
+
+void	ft_clear(t_table *table);
 
 #endif
