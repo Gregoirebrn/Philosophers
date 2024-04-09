@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time_&_clear.c                                     :+:      :+:    :+:   */
+/*   time_clear.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:25 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/08 15:34:55 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/09 13:44:30 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,25 @@ void	mutex_cleaner(t_table *table)
 
 	i = -1;
 	while (++i < table->nbr)
-		pthread_mutex_destroy(&table->forks[i].fork);
+		pthread_mutex_destroy(&table->forks[i]);
 	pthread_mutex_destroy(&table->m_table);
 	pthread_mutex_destroy(&table->m_start);
 	pthread_mutex_destroy(&table->m_write);
 }
 
-void	ft_clear(t_table *table)
+void	ft_clear(t_table *table, int join)
 {
 	int	i;
 
 	i = 0;
-	pthread_join(table->monitor, NULL);
-	while (i < table->nbr)
+	if (join == 1)
 	{
-		pthread_join(table->philos[i].thread, NULL);
-		i++;
+		pthread_join(table->monitor, NULL);
+		while (i < table->nbr)
+		{
+			pthread_join(table->philos[i].thread, NULL);
+			i++;
+		}
 	}
 	free(table->philos);
 	free(table->forks);

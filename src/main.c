@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/04/08 15:40:24 by grebrune          #+#    #+#             */
+/*   Updated: 2024/04/09 13:47:54 by grebrune         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../philo.h"
 
@@ -58,5 +69,5 @@ int	main(int ac, char **av)
 	}
 	pthread_create(&table.monitor, NULL, monitoring, &table);
 	pthread_mutex_unlock(&table.m_start);
-	return (ft_clear(&table), write(1, "End of simulation.\n", 19), 1);
+	return (ft_clear(&table, 1), write(1, "End of simulation.\n", 19), 1);
 }

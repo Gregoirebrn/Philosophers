@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/03/28 18:27:20 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/09 14:51:00 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,6 @@
 #include <stdio.h>
 #include <limits.h>
 #include <stdbool.h>
-
-// compilation -lpthread
-
-typedef struct s_fork
-{
-	pthread_mutex_t	fork;
-	int				fork_id;
-}	t_fork;
 
 typedef struct s_philo t_philo;
 
@@ -43,7 +35,7 @@ typedef struct s_table
 	pthread_mutex_t	m_start;
 	pthread_mutex_t	m_table;
 	pthread_mutex_t	m_write;
-	t_fork			*forks;
+	pthread_mutex_t	*forks;
 	t_philo			*philos;
 }	t_table;
 
@@ -52,6 +44,7 @@ struct s_philo
 	long			id;
 	long			last_meal;
 	bool			full;
+	bool			activ;
 	pthread_t		thread;
 	pthread_mutex_t	*m_fork_first;
 	pthread_mutex_t	*m_fork_second;
@@ -66,17 +59,16 @@ int			check_philo_alive(t_philo *philo);
 int			check_philo_hungry(t_philo *philo);
 void		check_write(char *str, t_philo *philo);
 
-void	*monitoring(void *data);
+void		*monitoring(void *data);
 
 void		init_threads(t_table *table);
 void		init_philos(t_table *table);
-void		init_forks(t_philo *philo, t_fork *fork, int i);
 
 int			dinner_begin(t_table *table);
 void		*thread_activ(void *data);
 
-void	philo_is_thinking(t_philo *philo);
+void		philo_is_thinking(t_philo *philo);
 
-void	ft_clear(t_table *table);
+void		ft_clear(t_table *table, int join);
 
 #endif
