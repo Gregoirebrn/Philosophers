@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:57:00 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/09 15:39:45 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:49:26 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	philo_is_thinking(t_philo *philo)
 	}
 	pthread_mutex_unlock(&philo->table->m_table);
 	check_write("is thinking !\n", philo);
-	ft_usleep(copy_sleep * 2);
+	ft_usleep(copy_sleep);
 	check_write("is sleeping !\n", philo);
 	ft_usleep(copy_sleep);
 }

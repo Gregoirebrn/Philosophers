@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:14:07 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/09 15:32:19 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/10 16:55:47 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,15 @@ void	check_write(char *str, t_philo *philo)
 	pthread_mutex_lock(&philo->table->m_write);
 	pthread_mutex_lock(&philo->table->m_table);
 	time = get_time() - philo->table->tim_start;
-	if (str[3] != 'D' && philo->table->stop == 1)
+	if (str[3] == 'D' && philo->table->stop == 1)
 	{
+		printf("\033[0;31mAt %ld philosopher %zu %s\033[0m", time, philo->id, str);
 		pthread_mutex_unlock(&philo->table->m_table);
 		pthread_mutex_unlock(&philo->table->m_write);
-		return ;
+		return (ft_clear(philo->table, 1));
 	}
-	pthread_mutex_unlock(&philo->table->m_table);
 	printf("At %ld philosopher %zu %s", time, philo->id, str);
+	pthread_mutex_unlock(&philo->table->m_table);
 	pthread_mutex_unlock(&philo->table->m_write);
 }
 

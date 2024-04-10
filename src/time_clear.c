@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:25 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/09 13:44:30 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/10 17:01:13 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ void	ft_clear(t_table *table, int join)
 	if (join == 1)
 	{
 		pthread_join(table->monitor, NULL);
-		while (i < table->nbr)
+		while (i <= table->nbr)
 		{
 			pthread_join(table->philos[i].thread, NULL);
 			i++;
 		}
 	}
-	free(table->philos);
 	free(table->forks);
+	free(table->philos);
+	free(table);
+	exit(0);
 }
