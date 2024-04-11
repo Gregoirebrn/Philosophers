@@ -69,5 +69,5 @@ int	main(int ac, char **av)
 	}
 	pthread_create(&table.monitor, NULL, monitoring, &table);
 	pthread_mutex_unlock(&table.m_start);
-	return (ft_clear(&table, 1), write(1, "End of simulation.\n", 19), 1);
+	return (ft_clear(&table, 1), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:57:00 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/10 16:49:26 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/11 17:08:35 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ void	philo_is_thinking(t_philo *philo)
 		return ;
 	}
 	pthread_mutex_unlock(&philo->table->m_table);
-	check_write("is thinking !\n", philo);
-	ft_usleep(copy_sleep);
-	check_write("is sleeping !\n", philo);
+	check_write("is thinking\n", philo);
+	ft_usleep(copy_sleep * 1000);
+	check_write("is sleeping\n", philo);
 	ft_usleep(copy_sleep);
 }
 
@@ -35,17 +35,15 @@ void	philo_is_hungry(t_philo *philo)
 	long	copy_eat;
 
 	pthread_mutex_lock(philo->m_fork_first);
-	check_write("has taken a first fork!\n", philo);
+	check_write("has taken a fork\n", philo);
 	pthread_mutex_lock(philo->m_fork_second);
-	check_write("has taken a second fork!\n", philo);
-	check_write("is eating!\n", philo);
-	pthread_mutex_lock(&philo->table->m_table);
+	check_write("has taken a fork\n", philo);
+	check_write("is eating\n", philo);
 	philo->last_meal = get_time();
 	copy_eat = philo->table->tim_eat;
-	pthread_mutex_unlock(&philo->table->m_table);
 	ft_usleep(copy_eat);
-	pthread_mutex_unlock(philo->m_fork_first);
 	pthread_mutex_unlock(philo->m_fork_second);
+	pthread_mutex_unlock(philo->m_fork_first);
 }
 
 void	*thread_activ(void *data)
@@ -56,10 +54,10 @@ void	*thread_activ(void *data)
 	pthread_mutex_lock(&philo->table->m_start);
 	pthread_mutex_unlock(&philo->table->m_start);
 	pthread_mutex_lock(&philo->table->m_table);
-	if (philo->id % 2 == 0 && philo->table->stop != 1)
+	if (philo->id % 2 == 1 && philo->table->stop != 1)
 	{
 		pthread_mutex_unlock(&philo->table->m_table);
-		check_write("is thinking.\n", philo);
+		check_write("is thinking\n", philo);
 		usleep(100);
 		pthread_mutex_lock(&philo->table->m_table);
 	}

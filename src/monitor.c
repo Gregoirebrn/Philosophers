@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:14:07 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/10 16:55:47 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/11 16:58:39 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,18 @@ void	check_write(char *str, t_philo *philo)
 	time = get_time() - philo->table->tim_start;
 	if (str[3] == 'D' && philo->table->stop == 1)
 	{
-		printf("\033[0;31mAt %ld philosopher %zu %s\033[0m", time, philo->id, str);
+		printf("\033[0;31m%ld %zu %s\033[0m", time, philo->id, str);
 		pthread_mutex_unlock(&philo->table->m_table);
 		pthread_mutex_unlock(&philo->table->m_write);
-		return (ft_clear(philo->table, 1));
+		return ;
 	}
-	printf("At %ld philosopher %zu %s", time, philo->id, str);
+	if (philo->table->stop == 1)
+	{
+		pthread_mutex_unlock(&philo->table->m_table);
+		pthread_mutex_unlock(&philo->table->m_write);
+		return ;
+	}
+	printf(" %ld %zu %s", time, philo->id, str);
 	pthread_mutex_unlock(&philo->table->m_table);
 	pthread_mutex_unlock(&philo->table->m_write);
 }
@@ -39,8 +45,9 @@ void	*monitoring(void *data)
 	table = (t_table *)data;
 	pthread_mutex_lock(&table->m_start);
 	pthread_mutex_unlock(&table->m_start);
-	i = 0;
+	ft_usleep(table->tim_die * 1000);
 	pthread_mutex_lock(&table->m_table);
+	i = 0;
 	while (table->stop != 1)
 	{
 		if (i == table->nbr)
@@ -50,7 +57,7 @@ void	*monitoring(void *data)
 			table->stop = 1;
 			table->philos->activ = false;
 			pthread_mutex_unlock(&table->m_table);
-			check_write("Is DEAD.\n", &table->philos[i]);
+			check_write("died\n", &table->philos[i]);
 			return (NULL);
 		}
 		pthread_mutex_unlock(&table->m_table);

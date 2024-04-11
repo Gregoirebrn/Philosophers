@@ -20,7 +20,7 @@ void	init_philos(t_table *table)
 	while (++i < table->nbr)
 	{
 		table->philos[i].table = table;
-		table->philos[i].id = i;
+		table->philos[i].id = i + 1;
 		table->philos[i].activ = true;
 		table->philos[i].full = false;
 		table->philos[i].last_meal = get_time();
