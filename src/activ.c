@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:57:00 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 15:20:11 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:33:43 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*thread_activ(void *data)
 		usleep(100);
 		pthread_mutex_lock(&philo->table->m_table);
 	}
-	while (philo->activ == true && philo->table->stop != 1)
+	while (philo->table->stop != 1)
 	{
 		pthread_mutex_unlock(&philo->table->m_table);
 		philo_is_hungry(philo);

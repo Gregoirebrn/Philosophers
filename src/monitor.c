@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:14:07 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 15:35:12 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:39:20 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,12 @@ void	*monitoring(void *data)
 		if (get_time() - table->philos[i].last_meal >= table->tim_die)
 		{
 			table->stop = 1;
-			table->philos->activ = false;
 			pthread_mutex_unlock(&table->m_table);
 			check_write("died\n", &table->philos[i]);
 			return (NULL);
 		}
 		if (1 == check_full(table))
 		{
-			table->philos->activ = false;
 			pthread_mutex_unlock(&table->m_table);
 			check_write("All philosophers are full.\n", &table->philos[i]);
 			return (NULL);

@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 14:57:38 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:39:20 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ struct s_philo
 	long			id;
 	long			last_meal;
 	long			plate;
-	bool			activ;
 	pthread_t		thread;
 	pthread_mutex_t	*m_fork_first;
 	pthread_mutex_t	*m_fork_second;
