@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:25 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/11 15:15:55 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 11:57:51 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,14 @@ void	ft_clear(t_table *table, int join)
 {
 	int	i;
 
-	i = 0;
+	i = -1;
 	if (join == 1)
 	{
 		pthread_join(table->monitor, NULL);
-		while (i < table->nbr)
-		{
+		while (++i < table->nbr)
 			pthread_join(table->philos[i].thread, NULL);
-			i++;
-		}
 	}
+	mutex_cleaner(table);
 	free(table->forks);
 	free(table->philos);
 	printf("End of simulation.\n");

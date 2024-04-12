@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:57:00 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/11 17:08:35 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:20:11 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,10 @@
 
 void	philo_is_thinking(t_philo *philo)
 {
-	long	copy_sleep;
-
-	pthread_mutex_lock(&philo->table->m_table);
-	copy_sleep = philo->table->tim_sleep;
-	if (philo->table->stop == 1)
-	{
-		pthread_mutex_unlock(&philo->table->m_table);
-		return ;
-	}
-	pthread_mutex_unlock(&philo->table->m_table);
 	check_write("is thinking\n", philo);
-	ft_usleep(copy_sleep * 1000);
+	ft_usleep(philo->table->tim_sleep * 1000);
 	check_write("is sleeping\n", philo);
-	ft_usleep(copy_sleep);
+	ft_usleep(500);
 }
 
 void	philo_is_hungry(t_philo *philo)
@@ -44,6 +34,9 @@ void	philo_is_hungry(t_philo *philo)
 	ft_usleep(copy_eat);
 	pthread_mutex_unlock(philo->m_fork_second);
 	pthread_mutex_unlock(philo->m_fork_first);
+	pthread_mutex_lock(&philo->table->m_table);
+	philo->plate += 1;
+	pthread_mutex_unlock(&philo->table->m_table);
 }
 
 void	*thread_activ(void *data)
@@ -61,7 +54,7 @@ void	*thread_activ(void *data)
 		usleep(100);
 		pthread_mutex_lock(&philo->table->m_table);
 	}
-	while (philo->activ == true && philo->table->stop != 1) // and not full
+	while (philo->activ == true && philo->table->stop != 1)
 	{
 		pthread_mutex_unlock(&philo->table->m_table);
 		philo_is_hungry(philo);

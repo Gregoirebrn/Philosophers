@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:14:07 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/11 16:58:39 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:35:12 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_write(char *str, t_philo *philo)
 	pthread_mutex_lock(&philo->table->m_write);
 	pthread_mutex_lock(&philo->table->m_table);
 	time = get_time() - philo->table->tim_start;
-	if (str[3] == 'D' && philo->table->stop == 1)
+	if ((str[3] == 'D' || str [0] == 'A') && philo->table->stop == 1)
 	{
 		printf("\033[0;31m%ld %zu %s\033[0m", time, philo->id, str);
 		pthread_mutex_unlock(&philo->table->m_table);
@@ -35,6 +35,28 @@ void	check_write(char *str, t_philo *philo)
 	printf(" %ld %zu %s", time, philo->id, str);
 	pthread_mutex_unlock(&philo->table->m_table);
 	pthread_mutex_unlock(&philo->table->m_write);
+}
+
+int	check_full(t_table *table)
+{
+	long	i;
+	long	time_to_eat;
+
+	i = -1;
+	time_to_eat = 0;
+	if (table->plates == 0)
+		return (0);
+	while (++i < table->nbr)
+	{
+		if (table->philos[i].plate >= table->plates)
+			time_to_eat += 1;
+	}
+	if (time_to_eat == table->nbr)
+	{
+		table->stop = 1;
+		return (1);
+	}
+	return (0);
 }
 
 void	*monitoring(void *data)
@@ -60,7 +82,15 @@ void	*monitoring(void *data)
 			check_write("died\n", &table->philos[i]);
 			return (NULL);
 		}
-		pthread_mutex_unlock(&table->m_table);
+		if (1 == check_full(table))
+		{
+			table->philos->activ = false;
+			pthread_mutex_unlock(&table->m_table);
+			check_write("All philosophers are full.\n", &table->philos[i]);
+			return (NULL);
+		}
+		else
+			pthread_mutex_unlock(&table->m_table);
 		ft_usleep(100);
 		pthread_mutex_lock(&table->m_table);
 		i++;

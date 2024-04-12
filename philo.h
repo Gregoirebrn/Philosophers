@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/09 14:51:00 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 14:57:38 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_table
 	long			tim_eat;
 	long			tim_sleep;
 	long			tim_start;
+	long			plates;
 	pthread_t		monitor;
 	pthread_mutex_t	m_start;
 	pthread_mutex_t	m_table;
@@ -43,7 +44,7 @@ struct s_philo
 {
 	long			id;
 	long			last_meal;
-	bool			full;
+	long			plate;
 	bool			activ;
 	pthread_t		thread;
 	pthread_mutex_t	*m_fork_first;
