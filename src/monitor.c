@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:14:07 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 15:39:20 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:41:02 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_write(char *str, t_philo *philo)
 
 	pthread_mutex_lock(&philo->table->m_write);
 	pthread_mutex_lock(&philo->table->m_table);
-	time = get_time() - philo->table->tim_start;
+	time = get_time(philo->table, 1) - philo->table->tim_start;
 	if ((str[3] == 'D' || str [0] == 'A') && philo->table->stop == 1)
 	{
 		printf("\033[0;31m%ld %zu %s\033[0m", time, philo->id, str);
@@ -74,7 +74,7 @@ void	*monitoring(void *data)
 	{
 		if (i == table->nbr)
 			i = 0;
-		if (get_time() - table->philos[i].last_meal >= table->tim_die)
+		if (get_time(table, 1) - table->philos[i].last_meal >= table->tim_die)
 		{
 			table->stop = 1;
 			pthread_mutex_unlock(&table->m_table);

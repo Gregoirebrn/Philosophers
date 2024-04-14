@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 15:39:20 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:41:02 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,24 +51,18 @@ struct s_philo
 	t_table			*table;
 };
 
-long		get_time(void);
-void		ft_usleep(long int time);
-void		ft_exit(const char *str);
+long		get_time(t_table *table, int mutex);
+void		ft_usleep(long int time, t_table *table, int mutex);
 
-int			check_philo_alive(t_philo *philo);
-int			check_philo_hungry(t_philo *philo);
 void		check_write(char *str, t_philo *philo);
-
 void		*monitoring(void *data);
 
 void		init_threads(t_table *table);
 void		init_philos(t_table *table);
 
-int			dinner_begin(t_table *table);
 void		*thread_activ(void *data);
-
 void		philo_is_thinking(t_philo *philo);
 
-void		ft_clear(t_table *table, int join);
+void		ft_clear(t_table *table, int join, int mutex, int malloc);
 
 #endif

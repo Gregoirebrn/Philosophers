@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:57:00 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 15:33:43 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:39:20 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	philo_is_thinking(t_philo *philo)
 {
 	check_write("is thinking\n", philo);
-	ft_usleep(philo->table->tim_sleep * 1000);
+	ft_usleep(philo->table->tim_sleep * 1000, philo->table, 0);
 	check_write("is sleeping\n", philo);
-	ft_usleep(500);
+	ft_usleep(500, philo->table, 0);
 }
 
 void	philo_is_hungry(t_philo *philo)
@@ -29,9 +29,9 @@ void	philo_is_hungry(t_philo *philo)
 	pthread_mutex_lock(philo->m_fork_second);
 	check_write("has taken a fork\n", philo);
 	check_write("is eating\n", philo);
-	philo->last_meal = get_time();
+	philo->last_meal = get_time(philo->table, 0);
 	copy_eat = philo->table->tim_eat;
-	ft_usleep(copy_eat);
+	ft_usleep(copy_eat, philo->table, 0);
 	pthread_mutex_unlock(philo->m_fork_second);
 	pthread_mutex_unlock(philo->m_fork_first);
 	pthread_mutex_lock(&philo->table->m_table);

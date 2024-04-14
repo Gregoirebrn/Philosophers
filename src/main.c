@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:40:24 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 15:01:23 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/12 15:02:17 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	*solobolo(void *data)
 	pthread_mutex_lock(philo->m_fork_first);
 	check_write("has taken a fork\n", philo);
 	pthread_mutex_unlock(philo->m_fork_first);
-	ft_usleep(philo->table->tim_die * 1000);
+	ft_usleep(philo->table->tim_die * 1000, philo->table, 0);
 	return (NULL);
 }
 
@@ -102,17 +102,17 @@ int	main(int ac, char **av)
 	if (table.nbr == 1)
 	{
 		if ( 0 != pthread_create(&table.philos[0].thread, NULL, solobolo, &table.philos[0]))
-			return (check_write("Creation of a thread Crashed.\n", &table.philos[0]), 1);
+			return (ft_clear(&table, 0, (int)table.nbr + 10 , 2), 1);
 	}
 	else
 	{
 		while (++i < table.nbr)
 		{
 			if ( 0 != pthread_create(&table.philos[i].thread, NULL, thread_activ, &table.philos[i]))
-				return (check_write("Creation of a thread Crashed.\n", &table.philos[0]), 1);
+				return (ft_clear(&table, i, (int)table.nbr + 10 , 2), 1);
 		}
 	}
 	pthread_create(&table.monitor, NULL, monitoring, &table);
 	pthread_mutex_unlock(&table.m_start);
-	return (ft_clear(&table, 1), 0);
+	return (ft_clear(&table, (int)table.nbr, (int)table.nbr + 10 , 2), 0);
 }
