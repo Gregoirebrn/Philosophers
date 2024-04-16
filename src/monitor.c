@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:14:07 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 15:41:02 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/04/14 00:31:21 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	*monitoring(void *data)
 	table = (t_table *)data;
 	pthread_mutex_lock(&table->m_start);
 	pthread_mutex_unlock(&table->m_start);
-	ft_usleep(table->tim_die * 1000);
+	ft_usleep(table->tim_die * 1000, table, 0);
 	pthread_mutex_lock(&table->m_table);
 	i = 0;
 	while (table->stop != 1)
@@ -89,9 +89,10 @@ void	*monitoring(void *data)
 		}
 		else
 			pthread_mutex_unlock(&table->m_table);
-		ft_usleep(100);
+		ft_usleep(100, table, 0);
 		pthread_mutex_lock(&table->m_table);
 		i++;
 	}
+	pthread_mutex_unlock(&table->m_table);
 	return (NULL);
 }
