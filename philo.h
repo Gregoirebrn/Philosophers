@@ -6,22 +6,22 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/12 15:41:02 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/06/17 23:42:38 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/time.h>
-#include <pthread.h>
-#include <stdio.h>
-#include <limits.h>
-#include <stdbool.h>
+# include <unistd.h>
+# include <stdlib.h>
+# include <sys/time.h>
+# include <pthread.h>
+# include <stdio.h>
+# include <limits.h>
+# include <stdbool.h>
 
-typedef struct s_philo t_philo;
+typedef struct s_philo	t_philo;
 
 typedef struct s_table
 {
@@ -50,19 +50,28 @@ struct s_philo
 	pthread_mutex_t	*m_fork_second;
 	t_table			*table;
 };
-
-long		get_time(t_table *table, int mutex);
-void		ft_usleep(long int time, t_table *table, int mutex);
-
-void		check_write(char *str, t_philo *philo);
-void		*monitoring(void *data);
-
-void		init_threads(t_table *table);
-void		init_philos(t_table *table);
-
-void		*thread_activ(void *data);
-void		philo_is_thinking(t_philo *philo);
-
-void		ft_clear(t_table *table, int join, int mutex, int malloc);
+//activ
+void	philo_is_thinking(t_philo *philo);
+void	philo_is_hungry(t_philo *philo);
+void	*thread_activ(void *data);
+//init
+void	init_threads(t_table *table);
+void	init_philos(t_table *table);
+int		start_threads(t_table table, int i);
+//main
+int		check_num(char *str);
+long	ft_atoi(char *str);
+int		check_tables(char **av, t_table *table, int ac);
+void	*solobolo(void *data);
+//monitor
+void	check_write(char *str, t_philo *philo);
+int		check_full(t_table *table);
+int		monitoring_loop(t_table *table, long i);
+void	*monitoring(void *data);
+//time_clear
+void	ft_usleep(long int time, t_table *table, int mutex);
+long	get_time(t_table *table, int mutex);
+void	mutex_cleaner(t_table *table, int mutex);
+void	ft_clear(t_table *table, int join, int mutex, int malloc);
 
 #endif

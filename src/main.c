@@ -6,13 +6,13 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:40:24 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/17 18:47:56 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/06/17 23:46:43 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-int		check_num(char *str)
+int	check_num(char *str)
 {
 	int	i;
 
@@ -100,20 +100,9 @@ int	main(int ac, char **av)
 		return (1);
 	init_threads(&table);
 	pthread_mutex_lock(&table.m_start);
-	if (table.nbr == 1)
-	{
-		if ( 0 != pthread_create(&table.philos[0].thread, NULL, solobolo, &table.philos[0]))
-			return (ft_clear(&table, 0, (int)table.nbr + 10 , 2), 1);
-	}
-	else
-	{
-		while (++i < table.nbr)
-		{
-			if ( 0 != pthread_create(&table.philos[i].thread, NULL, thread_activ, &table.philos[i]))
-				return (ft_clear(&table, i, (int)table.nbr + 10 , 2), 1);
-		}
-	}
+	if (start_threads(table, i))
+		return (1);
 	pthread_create(&table.monitor, NULL, monitoring, &table);
 	pthread_mutex_unlock(&table.m_start);
-	return (ft_clear(&table, (int)table.nbr, (int)table.nbr + 10 , 2), 0);
+	return (ft_clear(&table, (int)table.nbr, (int)table.nbr + 10, 2), 0);
 }

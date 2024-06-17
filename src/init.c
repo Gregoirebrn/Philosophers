@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:45:33 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/13 14:47:34 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/06/17 23:22:58 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_philos(t_table *table)
 {
-	int i;
+	int	i;
 
 	i = -1;
 	while (++i < table->nbr)
@@ -47,13 +47,33 @@ void	init_threads(t_table *table)
 	if (0 != pthread_mutex_init(&table->m_table, NULL))
 		return (ft_clear(table, 0, 1, 2));
 	if (0 != pthread_mutex_init(&table->m_start, NULL))
-		return (ft_clear(table, 0, 2 ,2));
+		return (ft_clear(table, 0, 2, 2));
 	table->stop = 0;
 	while (++i < table->nbr)
 	{
 		if (0 != pthread_mutex_init(&table->forks[i], NULL))
-			return (ft_clear(table, 0, i + 10 ,2));
+			return (ft_clear(table, 0, i + 10, 2));
 	}
 	table->tim_start = get_time(table, 0);
 	init_philos(table);
+}
+
+int	start_threads(t_table table, int i)
+{
+	if (table.nbr == 1)
+	{
+		if (0 != pthread_create(&table.philos[0].thread, \
+		NULL, solobolo, &table.philos[0]))
+			return (ft_clear(&table, 0, (int)table.nbr + 10, 2), 1);
+	}
+	else
+	{
+		while (++i < table.nbr)
+		{
+			if (0 != pthread_create(&table.philos[i].thread, \
+			NULL, thread_activ, &table.philos[i]))
+				return (ft_clear(&table, i, (int)table.nbr + 10, 2), 1);
+		}
+	}
+	return (0);
 }

@@ -59,6 +59,34 @@ int	check_full(t_table *table)
 	return (0);
 }
 
+int	monitoring_loop(t_table *table, long i)
+{
+	while (table->stop != 1)
+	{
+		if (i == table->nbr)
+			i = 0;
+		if (get_time(table, 1) - table->philos[i].last_meal >= table->tim_die)
+		{
+			table->stop = 1;
+			pthread_mutex_unlock(&table->m_table);
+			check_write("died\n", &table->philos[i]);
+			return (1);
+		}
+		if (1 == check_full(table))
+		{
+			pthread_mutex_unlock(&table->m_table);
+			check_write("All philosophers are full.\n", &table->philos[i]);
+			return (1);
+		}
+		else
+			pthread_mutex_unlock(&table->m_table);
+		ft_usleep(100, table, 0);
+		pthread_mutex_lock(&table->m_table);
+		i++;
+	}
+	return (0);
+}
+
 void	*monitoring(void *data)
 {
 	t_table	*table;
@@ -70,29 +98,8 @@ void	*monitoring(void *data)
 	ft_usleep(table->tim_die * 1000, table, 0);
 	pthread_mutex_lock(&table->m_table);
 	i = 0;
-	while (table->stop != 1)
-	{
-		if (i == table->nbr)
-			i = 0;
-		if (get_time(table, 1) - table->philos[i].last_meal >= table->tim_die)
-		{
-			table->stop = 1;
-			pthread_mutex_unlock(&table->m_table);
-			check_write("died\n", &table->philos[i]);
-			return (NULL);
-		}
-		if (1 == check_full(table))
-		{
-			pthread_mutex_unlock(&table->m_table);
-			check_write("All philosophers are full.\n", &table->philos[i]);
-			return (NULL);
-		}
-		else
-			pthread_mutex_unlock(&table->m_table);
-		ft_usleep(100, table, 0);
-		pthread_mutex_lock(&table->m_table);
-		i++;
-	}
+	if (monitoring_loop(table, i))
+		return (0);
 	pthread_mutex_unlock(&table->m_table);
 	return (NULL);
 }

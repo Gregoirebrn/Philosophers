@@ -14,7 +14,7 @@
 
 long int	get_time(t_table *table, int mutex)
 {
-	struct	timeval	val;
+	struct timeval	val;
 
 	if (-1 == gettimeofday(&val, NULL))
 	{
