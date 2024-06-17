@@ -19,7 +19,7 @@ void	check_write(char *str, t_philo *philo)
 	pthread_mutex_lock(&philo->table->m_write);
 	pthread_mutex_lock(&philo->table->m_table);
 	time = get_time(philo->table, 1) - philo->table->tim_start;
-	if ((str[3] == 'D' || str [0] == 'A') && philo->table->stop == 1)
+	if ((str[0] == 'd' || str [0] == 'A') && philo->table->stop == 1)
 	{
 		printf("\033[0;31m%ld %zu %s\033[0m", time, philo->id, str);
 		pthread_mutex_unlock(&philo->table->m_table);

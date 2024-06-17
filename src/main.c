@@ -80,6 +80,7 @@ void	*solobolo(void *data)
 	pthread_mutex_lock(&philo->table->m_start);
 	pthread_mutex_unlock(&philo->table->m_start);
 	check_write("is thinking\n", philo);
+	ft_usleep(philo->table->tim_sleep * 1000, philo->table, 0);
 	pthread_mutex_lock(philo->m_fork_first);
 	check_write("has taken a fork\n", philo);
 	pthread_mutex_unlock(philo->m_fork_first);
