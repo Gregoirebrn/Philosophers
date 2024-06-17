@@ -6,7 +6,7 @@
 #    By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 16:52:20 by grebrune          #+#    #+#              #
-#    Updated: 2024/04/11 17:06:19 by grebrune         ###   ########.fr        #
+#    Updated: 2024/04/16 16:07:49 by grebrune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ BIN			:=	philo
 all			:
 				$(MAKE) $(BIN)
 
-$(BIN)		:	$(OBJS_D) $(OBJS) $(HEAD) Makefile
+$(BIN)		:	$(OBJS_D) $(OBJS) $(HEAD)
 				$(CC) $(CFLAGS) -o $(BIN) $(OBJS)
 
 $(OBJS)		:	$(OBJS_D)%.o: $(SRCS_D)%.c $(HEAD)
