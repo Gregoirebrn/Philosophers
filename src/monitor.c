@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:14:07 by grebrune          #+#    #+#             */
-/*   Updated: 2024/04/14 00:31:21 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/06/17 23:06:18 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	check_write(char *str, t_philo *philo)
 	time = get_time(philo->table, 1) - philo->table->tim_start;
 	if ((str[0] == 'd' || str [0] == 'A') && philo->table->stop == 1)
 	{
-		printf("\033[0;31m%ld %zu %s\033[0m", time, philo->id, str);
+		printf(" \033[0;31m%ld %zu %s\033[0m", time, philo->id, str);
 		pthread_mutex_unlock(&philo->table->m_table);
 		pthread_mutex_unlock(&philo->table->m_write);
 		return ;
