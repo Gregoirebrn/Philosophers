@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/17 23:42:38 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/06/17 23:55:55 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ struct s_philo
 	pthread_mutex_t	*m_fork_second;
 	t_table			*table;
 };
+
 //activ
 void	philo_is_thinking(t_philo *philo);
 void	philo_is_hungry(t_philo *philo);
