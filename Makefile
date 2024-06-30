@@ -30,7 +30,7 @@ HEAD		:=	philo.h
 
 HEAD_D		:=	.
 
-CFLAGS		:=	-Wall -Wextra -Werror -pthread -g3 #-fsanitize=thread
+CFLAGS		:=	-Wall -Wextra -Werror -pthread -g3 #fsanitize=pthread
 
 BIN			:=	philo
 
