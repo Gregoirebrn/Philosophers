@@ -68,7 +68,7 @@ int	check_tables(char **av, t_table *table, int ac)
 	else
 		table->plates = 0;
 	if (table->nbr <= 0)
-		return (write(2,"Where the philosophers at ?\n", 28), 1);
+		return (write(2, "Where the philosophers at ?\n", 28), 1);
 	return (0);
 }
 
