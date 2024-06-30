@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:40:24 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/17 23:46:43 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:31:12 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int	check_tables(char **av, t_table *table, int ac)
 	}
 	else
 		table->plates = 0;
-	if (table->tim_die < 60 || table->tim_eat < 60 || table->tim_sleep < 60)
-		return (printf("Time too short too process simulation.\n"), 1);
+	if (table->nbr <= 0)
+		return (write(2,"Where the philosophers at ?\n", 28), 1);
 	return (0);
 }
 
@@ -79,11 +79,9 @@ void	*solobolo(void *data)
 	philo = (t_philo *)data;
 	pthread_mutex_lock(&philo->table->m_start);
 	pthread_mutex_unlock(&philo->table->m_start);
-	check_write("is thinking\n", philo);
-	ft_usleep(philo->table->tim_sleep * 1000, philo->table, 0);
-	pthread_mutex_lock(philo->m_fork_first);
+	pthread_mutex_lock(philo->fork);
 	check_write("has taken a fork\n", philo);
-	pthread_mutex_unlock(philo->m_fork_first);
+	pthread_mutex_unlock(philo->fork);
 	ft_usleep(philo->table->tim_die * 1000, philo->table, 0);
 	return (NULL);
 }
