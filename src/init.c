@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:45:33 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/17 23:22:58 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/06/30 16:31:12 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,11 @@ void	init_philos(t_table *table)
 	while (++i < table->nbr)
 	{
 		table->philos[i].plate = 0;
+		table->philos[i].fork_taken = 0;
 		table->philos[i].table = table;
 		table->philos[i].id = i + 1;
 		table->philos[i].last_meal = get_time(table, 0);
-		table->philos[i].m_fork_first = &table->forks[i];
-		if (i != table->nbr - 1)
-			table->philos[i].m_fork_second = &table->forks[i + 1];
-		else
-			table->philos[i].m_fork_second = &table->forks[0];
+		table->philos[i].fork = &table->forks[i];
 	}
 }
 
