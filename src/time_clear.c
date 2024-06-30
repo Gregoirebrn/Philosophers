@@ -82,6 +82,5 @@ void	ft_clear(t_table *table, int join, int mutex, int malloc)
 		if (malloc == 2)
 			free(table->forks);
 	}
-	printf("End of simulation.\n");
 	exit(0);
 }
