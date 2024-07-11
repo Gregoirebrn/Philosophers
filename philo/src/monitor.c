@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:14:07 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/18 15:33:13 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:50:11 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,24 @@ int	check_full(t_table *table)
 	return (0);
 }
 
+
+long get_lastmeal(t_table *table, int i)
+{
+	long	copy;
+
+	pthread_mutex_lock(&table->philos[i].m_last);
+	copy = table->philos[i].last_meal;
+	pthread_mutex_unlock(&table->philos[i].m_last);
+	return (copy);
+}
+
 int	monitoring_loop(t_table *table, long i)
 {
 	while (table->stop != 1)
 	{
 		if (i == table->nbr)
 			i = 0;
-		if (get_time(table, 1) - table->philos[i].last_meal >= table->tim_die)
+		if (get_time(table, 1) - get_lastmeal(table, i) >= table->tim_die)
 		{
 			table->stop = 1;
 			pthread_mutex_unlock(&table->m_table);

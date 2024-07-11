@@ -44,6 +44,7 @@ struct s_philo
 {
 	long			id;
 	long			last_meal;
+	pthread_mutex_t	m_last;
 	long			plate;
 	pthread_t		thread;
 	pthread_mutex_t	*fork;
@@ -57,7 +58,7 @@ void	philo_is_hungry(t_philo *philo);
 void	*thread_activ(void *data);
 //init
 void	init_threads(t_table *table);
-void	init_philos(t_table *table);
+void	init_philos(t_table *table, int mutex);
 int		start_threads(t_table table, int i);
 //main
 int		check_num(char *str);

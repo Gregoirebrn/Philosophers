@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/08 15:40:24 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/30 16:31:12 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/07/11 16:35:05 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,17 @@ long	ft_atoi(char *str)
 int	check_tables(char **av, t_table *table, int ac)
 {
 	table->nbr = ft_atoi(av[1]);
-	if (table->nbr == -1)
+	if (table->nbr <= -1)
 		return (1);
 	table->tim_die = ft_atoi(av[2]);
-	if (table->tim_die == -1)
+	if (table->tim_die <= -1)
 		return (1);
 	table->tim_eat = ft_atoi(av[3]);
-	if (table->tim_eat == -1)
+	if (table->tim_eat <= -1)
 		return (1);
 	table->tim_sleep = ft_atoi(av[4]);
-	if (table->tim_sleep == -1)
+	if (table->tim_sleep <= -1)
 		return (1);
-	printf("time to sleep = %ld\n", table->tim_sleep);
 	if (ac == 6)
 	{
 		table->plates = ft_atoi(av[5]);
@@ -70,6 +69,8 @@ int	check_tables(char **av, t_table *table, int ac)
 		table->plates = 0;
 	if (table->nbr <= 0)
 		return (write(2, "Where the philosophers at ?\n", 28), 1);
+	if (table->tim_sleep < 60 || table->tim_eat < 60 || table->tim_die < 60)
+		return (write(2, "Numbers to low, results would be undefined.\n", 44), 1);
 	return (0);
 }
 

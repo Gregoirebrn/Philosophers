@@ -6,13 +6,13 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:45:33 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/30 16:31:12 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:45:11 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void	init_philos(t_table *table)
+void	init_philos(t_table *table, int mutex)
 {
 	int	i;
 
@@ -25,6 +25,8 @@ void	init_philos(t_table *table)
 		table->philos[i].id = i + 1;
 		table->philos[i].last_meal = get_time(table, 0);
 		table->philos[i].fork = &table->forks[i];
+	if (0 != pthread_mutex_init(&table->philos[i].m_last, NULL))
+		return (ft_clear(table, 0, mutex, 2));
 	}
 }
 
@@ -52,7 +54,7 @@ void	init_threads(t_table *table)
 			return (ft_clear(table, 0, i + 10, 2));
 	}
 	table->tim_start = get_time(table, 0);
-	init_philos(table);
+	init_philos(table, i + 10);
 }
 
 int	start_threads(t_table table, int i)

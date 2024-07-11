@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:57:00 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/30 18:07:32 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/07/11 17:50:11 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ void	wait_or_take(long i, t_philo *philo, int unlock)
 	}
 }
 
+void	set_lastmeal(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->m_last);
+	philo->last_meal = get_time(philo->table, 0);
+	pthread_mutex_unlock(&philo->m_last);
+}
+
 void	philo_is_hungry(t_philo *philo)
 {
 	long	copy_eat;
@@ -72,7 +79,7 @@ void	philo_is_hungry(t_philo *philo)
 	wait_or_take(i, philo, 0);
 	check_write("has taken a fork\n", philo);
 	check_write("is eating\n", philo);
-	philo->last_meal = get_time(philo->table, 0);
+	set_lastmeal(philo);
 	copy_eat = philo->table->tim_eat;
 	ft_usleep(copy_eat * 1000, philo->table, 0);
 	wait_or_take(philo->id - 1, philo, 1);
