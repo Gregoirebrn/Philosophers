@@ -25,8 +25,8 @@ void	init_philos(t_table *table, int mutex)
 		table->philos[i].id = i + 1;
 		table->philos[i].last_meal = get_time(table, 0);
 		table->philos[i].fork = &table->forks[i];
-	if (0 != pthread_mutex_init(&table->philos[i].m_last, NULL))
-		return (ft_clear(table, 0, mutex, 2));
+		if (0 != pthread_mutex_init(&table->philos[i].m_last, NULL))
+			return (ft_clear(table, 0, mutex, 2));
 	}
 }
 

@@ -59,8 +59,7 @@ int	check_full(t_table *table)
 	return (0);
 }
 
-
-long get_lastmeal(t_table *table, int i)
+long	get_lastmeal(t_table *table, int i)
 {
 	long	copy;
 

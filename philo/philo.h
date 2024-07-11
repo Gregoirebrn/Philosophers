@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 16:52:01 by grebrune          #+#    #+#             */
-/*   Updated: 2024/06/30 16:31:12 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:31:41 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,9 @@ void	ft_usleep(long int time, t_table *table, int mutex);
 long	get_time(t_table *table, int mutex);
 void	mutex_cleaner(t_table *table, int mutex);
 void	ft_clear(t_table *table, int join, int mutex, int malloc);
+//setter getter
+long	find_fork(t_philo *philo, long id);
+int		get_arg(t_table *table, char **av);
+bool	get_taken(long i, t_philo *philo);
 
 #endif

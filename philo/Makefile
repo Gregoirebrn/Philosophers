@@ -6,7 +6,7 @@
 #    By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/13 16:52:20 by grebrune          #+#    #+#              #
-#    Updated: 2024/07/11 18:05:39 by grebrune         ###   ########.fr        #
+#    Updated: 2024/07/11 18:19:35 by grebrune         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,12 @@
 #                                                       VARIABLE                                                       #
 ########################################################################################################################
 
-SRCS		:=	activ.c\
-				init.c\
-				main.c\
-				monitor.c\
-				time_clear.c\
+SRCS		:=	activ.c			\
+				init.c			\
+				main.c			\
+				monitor.c		\
+				time_clear.c	\
+				setter_getter.c	\
 
 SRCS_D		:=	src/
 

@@ -6,7 +6,7 @@
 /*   By: grebrune <grebrune@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:57:00 by grebrune          #+#    #+#             */
-/*   Updated: 2024/07/11 17:50:11 by grebrune         ###   ########.fr       */
+/*   Updated: 2024/07/11 18:27:37 by grebrune         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,6 @@ void	philo_is_thinking(t_philo *philo)
 	check_write("is thinking\n", philo);
 	ft_usleep(500, philo->table, 0);
 }
-
-long	find_fork(t_philo *philo, long id)
-{
-	if (philo->table->nbr == id)
-		return (0);
-	return (id);
-}
-
-bool	get_taken(long i, t_philo *philo)
-{
-	int	bol;
-
-	pthread_mutex_lock(philo->table->philos[i].fork);
-	bol = philo->table->philos[i].fork_taken;
-	pthread_mutex_unlock(philo->table->philos[i].fork);
-	if (bol == 0)
-		return (true);
-	return (false);
-}
-
 
 void	wait_or_take(long i, t_philo *philo, int unlock)
 {
