@@ -1,4 +1,6 @@
-Here are the things you need to know if you want to succeed this assignment:
+# Overview
+
+Here are the things you need to know if you want to understand the project:
 
 
 • One or more philosophers sit at a round table.
